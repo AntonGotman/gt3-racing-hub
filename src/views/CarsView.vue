@@ -1,25 +1,21 @@
 <template>
   <v-container>
-
     <h1 class="mb-5">
       Автомобили GT3
     </h1>
 
     <v-row>
-
       <v-col
-          v-for="car in cars"
-          :key="car.id"
-          cols="12"
-          md="4"
+        v-for="car in cars"
+        :key="car.id"
+        cols="12"
+        md="4"
       >
-
-        <v-card>
-
+        <v-card elevation="8">
           <v-img
-              :src="car.image"
-              height="250"
-              cover
+            :src="car.image"
+            height="250"
+            cover
           />
 
           <v-card-title>
@@ -27,30 +23,37 @@
           </v-card-title>
 
           <v-card-text>
-            {{ car.power }} л.с.
+            Мощность: {{ car.power }} л.с.
           </v-card-text>
 
           <v-card-actions>
-
             <v-btn
-                color="red"
-                :to="'/car/' + car.id"
+              color="red"
+              :to="'/car/' + car.id"
             >
               Подробнее
             </v-btn>
 
+            <v-btn
+              :color="isFavorite(car.id) ? 'light-blue' : 'green'"
+              @click="toggleFavorite(car)"
+            >
+              {{ isFavorite(car.id) ? 'В избранном' : 'В избранное' }}
+            </v-btn>
+
           </v-card-actions>
-
         </v-card>
-
       </v-col>
-
     </v-row>
-
   </v-container>
 </template>
 
 <script setup>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+
+const store = useStore()
+
 const cars = [
   {
     id: 1,
@@ -71,4 +74,18 @@ const cars = [
     image: 'https://i.pinimg.com/1200x/92/2b/5a/922b5a7fb189064ca28efc66c6a4eb5d.jpg'
   }
 ]
+
+const favorites = computed(() => store.state.favorites)
+
+function isFavorite(id) {
+  return favorites.value.some(car => car.id === id)
+}
+
+function toggleFavorite(car) {
+  if (isFavorite(car.id)) {
+    store.dispatch('removeFromFavorites', car.id)
+  } else {
+    store.dispatch('addToFavorites', car)
+  }
+}
 </script>

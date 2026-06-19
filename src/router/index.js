@@ -5,37 +5,42 @@ import CarsView from '../views/CarsView.vue'
 import ResultsView from '../views/ResultsView.vue'
 import AboutView from '../views/AboutView.vue'
 import CarDetailsView from '../views/CarDetailsView.vue'
+import FavoritesView from '../views/FavoritesView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
 
 const routes = [
-    {
-        path: '/',
-        component: HomeView
-    },
-    {
-        path: '/cars',
-        component: CarsView
-    },
-    {
-        path: '/results',
-        component: ResultsView
-    },
-    {
-        path: '/about',
-        component: AboutView
-    },
-    {
-        path: '/car/:id',
-        component: CarDetailsView,
-        props: true
-    },
-    {
-        path: '/:pathMatch(.*)*',
-        component: NotFoundView
-    }
+  {
+    path: '/',
+    component: HomeView
+  },
+  {
+    path: '/cars',
+    component: CarsView
+  },
+  {
+    path: '/results',
+    component: ResultsView
+  },
+  {
+    path: '/about',
+    component: AboutView
+  },
+  {
+    path: '/favorites',
+    component: FavoritesView
+  },
+  {
+    path: '/car/:id',
+    component: CarDetailsView,
+    props: true
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    component: NotFoundView
+  }
 ]
 
 export default createRouter({
-    history: createWebHistory(),
-    routes
+  history: createWebHistory(),
+  routes
 })
